@@ -1,10 +1,11 @@
 import sys
 from socket import *
-from struct import pack
 import threading,pickle
+from PyQt5 import uic
 
 clientSock = socket(AF_INET, SOCK_STREAM)
 clientSock.connect(('127.0.0.1', 8080))
+form_class = uic.loadUiType("chatting.ui")[0]
 
 
 #data.decode('utf-8')
@@ -83,10 +84,22 @@ def recvMsg():
 if __name__ == "__main__":
     # 여기는 클라이언트 입니다.
     recvThread = threading.Thread(target=recvMsg, args=())
-    sendThread = threading.Thread(target=sendMsg, args=())
+    #sendThread = threading.Thread(target=sendMsg, args=())
     recvThread.start()
-    sendThread.start()
+    #sendThread.start()
 
+    app = QApplication(sys.argv)
+    myWindow = WindowClass()
+    myWindow.show()
+
+    app.exec_()
+
+
+    '''
+    listView_chatting : QListView
+    lineEdit_chatting : QLineEdit
+    button_chatting : QPushButton
+    '''
 
 
 
