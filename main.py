@@ -15,6 +15,17 @@ clientSock.connect(('127.0.0.1', 8080))
 # 수신시  : 크기전송 -> 실제전송
 # 송신시  : 크기수신 -
 
+class socketMsg:
+    nickname="익명"
+    message="없음"
+    mode=0
+    '''
+    normal send Msg 1
+    log in  2
+    log out 3    
+    '''
+
+
 def utf8len(s):#utf-8 형태의 바이트 갯수를 반환합니다.
     return len(s.encode('utf-8'))
 
