@@ -28,6 +28,7 @@ def sendMsg():
         print("send real message ")
         #0.3초 기다렸다가 보낼까 말까 싶다. 상대방 PC에서 통신이 밀릴수도 있으니.
         clientSock.send(msg.encode('utf-8'))
+        #알고싶은건 클래스도 ENCODE로 전송이 가능한가 에 있다.
 
 
 def recvMsg():
@@ -35,20 +36,17 @@ def recvMsg():
     recvMsgSize =-1
     recvMsg=False
     print('recv msg thread on')
-    while recvMsgSizeLoop: #제일먼저 메세지의 길이를 수신받습니다.
-        # 어짜피 단일 파일이 1바이트(int를 환산시 2기가)를 넘을
-        #가능성은 사실상 없으니, 1바이트만으로도 수신데이터의 사이즈를 가늠하기에는 충분합니다.
-
-        # data = data+ connectionSock.recv(2).decode('utf-8')
-        recvMsgSize = clientSock.recv(1024)#일바이트의 길이(숫자)를 수신합니다.  2억가지는 되니 상관없겠지.
-
-        if (recvMsgSize.decode('utf-8').isdecimal()):#올바르게 숫자값이 돌아왔는지 확인합니다.
+    while recvMsgSizeLoop:
+        recvMsgSize = clientSock.recv(10)#원리는 서버와 같다. 10자리면 용량 한계를 거의 100억단위로 표시 가능하고,
+        #사실상 10기가 까지는 표기하고 전송가능하다.
+        recvMsgSize = recvMsgSize.decode('utf-8')
+        if (recvMsgSize.isdecimal()):#올바르게 숫자크기값 이 돌아왔는지 확인합니다.
             print("data size returned", recvMsgSize)
-            recvMsgSizeLoop = False
-            recvMsgSize=int(recvMsgSize.decode('utf-8'))
+
+            recvMsgSize=int(recvMsgSize)#이거 안해줬다가 str고쳐달라고 오류 나온다.
 
             recvMsg = clientSock.recv(recvMsgSize)#아까 받아온 사이즈를 기반으로 수신한다.
-            print(recvMsg.decode('utf-8'))
+            print("받은 데이터는 ",recvMsg.decode('utf-8'))
 
 
 
