@@ -90,7 +90,7 @@ class WindowClass(QMainWindow,form_class):
 
     def sendBtnClick(self):
         text = self.lineEdit_chatting.text()
-        self.sendMsg(text,"닉네임1")#여기 위치에 닉네임을 집어넣으시오.
+        self.sendMsg(text,"닉네임2")#여기 위치에 닉네임을 집어넣으시오.
         print("text widget text",text)
 
     def sendMsg(self,msg,nickname):
